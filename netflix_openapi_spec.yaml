@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  description: "This is a sample Netflix Title API that can be used to get, delete, and post new records into the Database."
+  version: "1.0.0"
+  title: "Netflix Titles"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+tags:
+- name: "Netflix Titles"
+  description: "Ever"
+schemes:
+- "http"
+paths:
+  /titles:
+    post:
+      tags:
+      - "title"
+      summary: "Add a new title to the Netflix Database"
+      description: ""
+      operationId: "addTitle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Title object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Title"
+      responses:
+        "405":
+          description: "Invalid input"
+    put:
+      tags:
+      - "title"
+      summary: "Update an existing title"
+      description: ""
+      operationId: "updatePet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Title object that needs to be added to the Database"
+        required: true
+        schema:
+          $ref: "#/definitions/Title"
+      responses:
+        "400":
+          description: "Invalid show_id supplied"
+        "404":
+          description: "Title not found"
+        "405":
+          description: "Validation exception"
+  /titles/findByDirector:
+    get:
+      tags:
+      - "title"
+      summary: "Find Titles by Director"
+      description: "Director"
+      operationId: "findTitlesByDirector"
+      produces:
+      - "application/json"
+      parameters:
+      - in: query
+        name: "director"
+        type: string
+        description: "Status values that need to be considered for filter"
+        required: true
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Title"
+        "400":
+          description: "Invalid Director value"
+
+  /titles/findByType:
+    get:
+      tags:
+      - "title"
+      summary: "Finds Titles by type"
+      description: "Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing."
+      operationId: "findPetsByTags"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "types"
+        in: "query"
+        description: "Types to filter by"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Title"
+        "400":
+          description: "Invalid tag value"
+  /titles/{show_id}:
+    get:
+      tags:
+      - "title"
+      summary: "Find title by ID"
+      description: "Returns a single Title"
+      operationId: "getTitleById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "show_id"
+        in: "path"
+        description: "ID of title to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Title"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Title not found"
+    delete:
+      tags:
+      - "title"
+      summary: "Deletes a title"
+      description: ""
+      operationId: "deletePet"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "show_id"
+        in: "path"
+        description: "Show id to delete"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Title not found"
+definitions:
+  Title:
+    type: "object"
+    required:
+    - "show_id"
+    properties:
+      show_id:
+        type: "string"
+      type:
+        type: "string"
+      title:
+        type: "string"
+      director:
+        type: "string"
+      cast:
+        type: "string"
+      country:
+        type: "string"
+      date_added:
+        type: "string"
+      release_year:
+        type: "integer"
+      rating:
+        type: "string"
+      duration:
+        type: "string"
+      listed_in:
+        type: "string"
+      description:
+        type: "string"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
