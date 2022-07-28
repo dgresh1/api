@@ -4,7 +4,7 @@ import json
 
 header = {'Accept': 'application/json', 'Content-Type': 'application/json'}
 
-with open ("netflix_titles.csv", encoding='utf-8') as file:
+with open ("csv_files/netflix_titles.csv", encoding='utf-8') as file:
     csv_file = csv.DictReader(file)
     
     for row in csv_file:
