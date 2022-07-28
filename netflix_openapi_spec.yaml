@@ -9,21 +9,19 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
+host: "tactical-hydra-357623.uc.r.appspot.com"
 tags:
 - name: "Netflix Titles"
   description: "Ever"
 schemes:
-- "http"
 - "https"
 paths:
   /titles:
     post:
       tags:
       - "title"
-      summary: "Add a new title to the Netflix Database"
+      summary: "Add title to the Netflix Database"
       description: ""
-      operationId: "addTitle"
       consumes:
       - "application/json"
       produces:
@@ -40,43 +38,18 @@ paths:
           description: "Successful"
         "405":
           description: "Invalid input"
-    put:
-      tags:
-      - "title"
-      summary: "Update an existing title"
-      description: ""
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Title object that needs to be updated in the Database"
-        required: true
-        schema:
-          $ref: "#/definitions/Title"
-      responses:
-        "400":
-          description: "Invalid show_id supplied"
-        "404":
-          description: "Title not found"
-        "405":
-          description: "Validation exception"
-  /titles/findByDirector:
     get:
       tags:
       - "title"
-      summary: "Find Titles by Director"
-      description: "Director"
-      operationId: "findTitlesByDirector"
+      summary: "List of titles - Pagination"
+      description: "returns 10 results per page"
       produces:
       - "application/json"
       parameters:
       - in: query
-        name: "director"
+        name: "page"
         type: string
-        description: "Status values that need to be considered for filter"
+        description: "Page # to return"
         required: true
       responses:
         "200":
@@ -85,8 +58,27 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Title"
-        "400":
-          description: "Invalid Director value"
+  /titles/findByDirector:
+    get:
+      tags:
+      - "title"
+      summary: "Find Titles by Director"
+      description: "Director"
+      produces:
+      - "application/json"
+      parameters:
+      - in: query
+        name: "director"
+        type: string
+        description: "Director for filter"
+        required: true
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Title"
 
   /titles/findByType:
     get:
@@ -110,8 +102,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Title"
-        "400":
-          description: "Invalid tag value"
   /titles/{show_id}:
     get:
       tags:
@@ -132,10 +122,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Title"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Title not found"
     delete:
       tags:
       - "title"
@@ -151,10 +137,8 @@ paths:
         required: true
         type: "string"
       responses:
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Title not found"
+        "204":
+          description: "Deleted Succesfully"
 definitions:
   Title:
     type: "object"
