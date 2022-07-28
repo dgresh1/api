@@ -1,0 +1,13 @@
+instance_class: F1
+
+inbound_services:
+- warmup
+
+env_variables:
+  CLOUD_SQL_USERNAME: netflix
+  CLOUD_SQL_PASSWORD: redacted
+  CLOUD_SQL_DATABASE_NAME: netflix
+  CLOUD_SQL_CONNECTION_NAME: tactical-hydra-357623:us-central1:flaskinternal
+
+vpc_access_connector:
+  name: "projects/tactical-hydra-357623/locations/us-central1/connectors/netflix"
